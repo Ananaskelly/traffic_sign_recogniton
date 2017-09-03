@@ -1,12 +1,9 @@
 import numpy as np
 import collections
 import os
-import proc
-import glob
-import cv2
+import img_processing
 import csv
 import configparser as cfp
-from tensorflow.python.framework import dtypes
 
 CSV_NAME_PREF = 'GT-'
 CSV_NAME_EX = '.csv'
@@ -87,8 +84,8 @@ def read_gtrsb_dataset():
             it = iter(data_reader)
             next(it)
             for row in it:
-                all_images[counter] = proc.load_and_process(os.path.join(path_to_data, d, row[0]), int(row[1]),
-                                                            int(row[2]), int(row[3]), int(row[4]))
+                all_images[counter] = img_processing.load_and_process(os.path.join(path_to_data, d, row[0]), int(row[1]),
+                                                                      int(row[2]), int(row[3]), int(row[4]))
         print(str(ind) + ' folder loaded')
 
     all_labels = dense_to_one_hot(labels_array, num_classes)
