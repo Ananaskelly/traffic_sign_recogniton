@@ -1,11 +1,18 @@
 import cv2
+import numpy as np
 
 
-def load_and_process(path, width, height, x, y):
-    img = cv2.imread(path)
-    img_roi = img[x:x+width, y:y+height]
+def load_and_process(path, x1, y1, x2, y2, is_grayscale=False):
+    img = cv2.imread(path, 1)
+    img_roi = img[x1:x2, y1:y2, :]
     img_roi = cv2.resize(img_roi, (32, 32))
 
+    # test purpose
     # cv2.imshow('img', img_roi)
     # cv2.waitKey()
-    return cv2.cvtColor(img_roi, cv2.COLOR_BGR2GRAY)
+
+    if is_grayscale:
+        img_roi = cv2.cvtColor(img_roi, cv2.COLOR_BGR2GRAY)
+
+    img_out = np.multiply(img_roi, 1.0 / 255.0)
+    return img_out

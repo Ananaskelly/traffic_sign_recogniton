@@ -8,6 +8,9 @@ import configparser as cfp
 CSV_NAME_PREF = 'GT-'
 CSV_NAME_EX = '.csv'
 
+np.set_printoptions(threshold=np.nan)
+
+
 class DataSet(object):
 
     def __init__(self,
@@ -68,11 +71,10 @@ def read_gtrsb_dataset():
     num_training = round(num_all*0.9)
     num_test = num_all - num_training
 
-    all_images = np.zeros((num_all, 32, 32))
+    all_images = np.zeros((num_all, 32, 32, 3))
 
     dirs = os.listdir(path_to_data)
     counter = 0
-
     labels_array = np.asarray([])
     num_classes = len(dirs)
     for ind, d in enumerate(dirs):
@@ -84,12 +86,12 @@ def read_gtrsb_dataset():
             it = iter(data_reader)
             next(it)
             for row in it:
-                all_images[counter] = img_processing.load_and_process(os.path.join(path_to_data, d, row[0]), int(row[1]),
-                                                                      int(row[2]), int(row[3]), int(row[4]))
-        print(str(ind) + ' folder loaded')
+                all_images[counter] = img_processing.load_and_process(os.path.join(path_to_data, d, row[0]), int(row[3]),
+                                                                      int(row[4]), int(row[5]), int(row[6]))
+                counter += 1
+        # print(str(ind) + ' folder loaded')
 
     all_labels = dense_to_one_hot(labels_array, num_classes)
-
     perm = np.arange(num_all)
     np.random.shuffle(perm)
     all_images = all_images[perm]
