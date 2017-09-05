@@ -1,7 +1,7 @@
 import tensorflow as tf
 
 import dataset
-import simple_model as cnn
+import simple_ms_model as cnn
 
 data = dataset.read_gtrsb_dataset()
 
