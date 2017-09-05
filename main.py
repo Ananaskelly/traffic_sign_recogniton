@@ -1,15 +1,15 @@
 import tensorflow as tf
 
 import dataset
-import simple_ms_model as cnn
+import residual_model as cnn
 
 data = dataset.read_gtrsb_dataset()
 
 print("Images loaded..")
 
 learning_rate = 0.001
-training_iterations = 300000
-batch_size = 128
+training_iterations = 100000
+batch_size = 28
 display_step = 10
 beta = 0.001
 
