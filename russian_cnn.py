@@ -1,20 +1,20 @@
 import tensorflow as tf
 import os
 
-import dataset
-import simple_ms_model as cnn
+import russian_dataset
+import cnn_base as cnn
 
-data = dataset.read_gtrsb_dataset()
+data = russian_dataset.read(106)
 
 print("Images loaded..")
 
 learning_rate = 0.001
-training_iterations = 400000
+training_iterations = 300000
 batch_size = 28
 display_step = 10
 beta = 0.001
 
-n_classes = 43
+n_classes = 106
 dropout = 0.5
 
 # tf Graph input
@@ -55,24 +55,13 @@ with tf.Session() as sess:
                   "{:.7f}".format(acc))
         step += 1
 
-    print("Testing Accuracy:",
-        sess.run(accuracy, feed_dict={x: data.test.images,
-                                      y: data.test.labels,
-                                      keep_prob: 1.}))
-
     saver = tf.train.Saver()
 
     saver_def = saver.as_saver_def()
 
     saver.save(sess, os.path.join(os.getcwd(), 'trained_model'))
 
-    builder = tf.python.saved_model.builder.SavedModelBuilder(os.path.join(os.getcwd(), 'tmp\\model'))
-    builder.add_meta_graph_and_variables(
-        sess,
-        [tf.python.saved_model.tag_constants.SERVING],
-        signature_def_map={
-            "magic_model": tf.saved_model.signature_def_utils.predict_signature_def(
-                inputs={"x": x, "y": y},
-                outputs={"prediction": prediction}
-        )})
-    builder.save()
+    print("Testing Accuracy:",
+        sess.run(accuracy, feed_dict={x: data.test.images,
+                                      y: data.test.labels,
+                                      keep_prob: 1.}))

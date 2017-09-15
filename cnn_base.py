@@ -19,7 +19,7 @@ def get_model(inp, out_classes):
 
     fc_inp = tf.reshape(max_pool_3, [-1, 128])
 
-    fc_1 = tf.layers.dense(inputs=fc_inp, units=200, kernel_initializer=tf.contrib.layers.xavier_initializer(),
+    fc_1 = tf.layers.dense(inputs=fc_inp, units=528, kernel_initializer=tf.contrib.layers.xavier_initializer(),
                            activation=tf.nn.relu)
     fc_2 = tf.layers.dense(inputs=fc_1, units=out_classes, kernel_initializer=tf.contrib.layers.xavier_initializer())
 
