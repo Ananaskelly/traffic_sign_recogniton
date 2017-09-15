@@ -9,7 +9,7 @@ data = russian_dataset.read(106)
 print("Images loaded..")
 
 learning_rate = 0.001
-training_iterations = 300000
+training_iterations = 400000
 batch_size = 28
 display_step = 10
 beta = 0.001
@@ -59,7 +59,7 @@ with tf.Session() as sess:
 
     saver_def = saver.as_saver_def()
 
-    saver.save(sess, os.path.join(os.getcwd(), 'trained_model'))
+    saver.save(sess, os.path.join(os.getcwd(), 'model/trained_model'))
 
     print("Testing Accuracy:",
         sess.run(accuracy, feed_dict={x: data.test.images,

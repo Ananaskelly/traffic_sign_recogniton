@@ -1,0 +1,2 @@
+model_checkpoint_path: "C:\\Users\\Ananasy\\PycharmProjects\\traffic_sign_recognition\\model/trained_model"
+all_model_checkpoint_paths: "C:\\Users\\Ananasy\\PycharmProjects\\traffic_sign_recognition\\model/trained_model"

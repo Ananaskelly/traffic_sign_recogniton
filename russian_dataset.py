@@ -3,6 +3,7 @@ import collections
 import os
 import img_processing
 import csv
+import cv2
 import configparser as cfp
 
 CSV_NAME_TRAIN = 'gt_train.csv'
@@ -72,7 +73,7 @@ def read(num_classes):
     num_training = sum([len(list(filter(lambda f: f.endswith('.png'), files))) for r, d, files in
                        os.walk(path_to_data_train)])
     num_test = sum([len(list(filter(lambda f: f.endswith('.png'), files))) for r, d, files in
-                       os.walk(path_to_data_train)])
+                       os.walk(path_to_data_test)])
 
     train_images = np.zeros((num_training, 32, 32, 3))
     test_images = np.zeros((num_test, 32, 32, 3))
@@ -103,6 +104,7 @@ def read(num_classes):
             class_no = row[1]
             test_images[counter] = img_processing.load_and_process_without_roi(os.path.join(path_to_data_test,
                                                                                            filename), False)
+
             labels_test[counter] = class_no
             counter += 1
             if counter%1000 == 0:
@@ -116,7 +118,6 @@ def read(num_classes):
     np.random.shuffle(perm)
     test_images = test_images[perm]
     labels_test = labels_test[perm]
-
     train_labels = dense_to_one_hot(labels_train, num_classes)
     test_labels = dense_to_one_hot(labels_test, num_classes)
 
